@@ -36,6 +36,7 @@ my $previous_minute = $current_time - 60;
 
 # Get the timestamp for the previous minute
 my $previous_period_time = $previous_minute->strftime("%d/%b/%Y:%H:%M");
+my ($formatted_time )=  $previous_minute->strftime("%a %b %e %H:%M:%S %Y");
 
 my $display_previous_period_time = $previous_minute->strftime("%a %b %e %H:%M:%S %Y");
 
@@ -67,14 +68,14 @@ while(<TAIL>) {
 			
 			$uniqueIPs{$iponly}++ ;
 			$listenerIPCount++ ;
-			print "uniqueIPs $iponly $theip\n"; 
+			print "uniqueIPs $iponly $theip\n" if $debug; 
 		}
 		
 		unless (exists $uniqueIPandUID{"$theip"}) {
 			
 			$uniqueIPandUID{"$theip"}++;
 			$listenerCount++;
-			print "uniqueIPandUID $theip " . $uniqueIPandUID{"$theip"} . "\n"; 
+			print "uniqueIPandUID $theip " . $uniqueIPandUID{"$theip"} . "\n" if $debug; 
 		}
 		
 	}
@@ -83,7 +84,7 @@ while(<TAIL>) {
 #Experimenting with different formats
 #printf("%5s %s\n",  $listenerCount, $previous_period_time);
 
-print "$previous_period_time\t$listenerCount\t$listenerIPCount\n";
+print "$formatted_time\t$listenerCount\t$listenerIPCount\n";
 
 
 
@@ -130,7 +131,3 @@ sub Process {
 	}
 
 }
-
-
-
-
